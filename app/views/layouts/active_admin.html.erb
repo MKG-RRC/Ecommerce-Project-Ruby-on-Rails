@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= active_admin_head %>
+  </head>
+
+  <body class="active_admin">
+
+    <!-- Sidebar -->
+    <%= render "active_admin/sidebar" %>
+
+    <!-- Main Content -->
+    <div id="aa-main-content">
+      <%= yield %>
+    </div>
+
+    <%= javascript_include_tag ActiveAdmin.application.javascripts %>
+  </body>
+</html>

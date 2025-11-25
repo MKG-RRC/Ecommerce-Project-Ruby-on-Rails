@@ -1,0 +1,42 @@
+// Remove default AA styling
+$skin-active-admin: false;
+
+// Use modern fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+body.active_admin {
+  font-family: "Inter", sans-serif;
+  background-color: #f5f7fb;
+
+  .header {
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+
+  .table_tools {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .panel {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    background: white;
+  }
+
+  input, select, textarea {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+
+  .btn, .button {
+    border-radius: 8px;
+    background-color: #4f46e5 !important;
+    color: white !important;
+    padding: 10px 15px;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(79,70,229,0.3);
+  }
+}

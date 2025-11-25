@@ -1,0 +1,57 @@
+# This overrides ActiveAdmin::Views::Pages::Layout (Arbre template)
+
+doctype!
+
+html class: "admin-shopify" do
+  head do
+    text_node(active_admin_head)
+  end
+
+  body class: "active_admin shopify-theme" do
+
+    # Shopify Sidebar
+    div id: "aa-sidebar" do
+      div class: "sidebar-header" do
+        h2 "Store Admin"
+      end
+
+      ul class: "sidebar-nav" do
+        li(class: current_page?(admin_root_path) ? "active" : "") do
+          a href: admin_root_path do
+            span "Dashboard"
+          end
+        end
+
+        AdminUser.all.each do |u|
+          # Skip dynamic menu creation for ActiveAdmin internals
+        end
+
+        # Generate menu items from ActiveAdmin config
+        active_admin_namespace = active_admin_config.namespace
+
+        active_admin_namespace.menu.items.each do |item|
+          li(class: current_page?(item.url) ? "active" : "") do
+            a href: url_for(item.url) do
+              span item.label
+            end
+          end
+        end
+      end
+
+      div class: "sidebar-footer" do
+        a href: destroy_admin_user_session_path, "data-method": :delete do
+          span "Logout"
+        end
+      end
+    end
+
+    # Main Content
+    div id: "aa-main-content" do
+      # ActiveAdmin normally wraps pages in Base element
+      insert_tag ActiveAdmin::Views::Pages::Base
+    end
+
+    # JS
+    text_node(javascript_include_tag ActiveAdmin.application.javascripts)
+  end
+end

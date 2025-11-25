@@ -6,6 +6,11 @@ ActiveAdmin.setup do |config|
   #
   config.site_title = "Store"
 
+  require Rails.root.join("app/lib/active_admin/shopify_sidebar_renderer")
+  config.view_factory.register(
+    global_navigation: ActiveAdmin::Views::ShopifySidebarRenderer
+  )
+
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
