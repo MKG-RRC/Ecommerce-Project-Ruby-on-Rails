@@ -1,0 +1,80 @@
+<div class="container my-5">
+
+  <h1 class="mb-4 fw-bold">Products</h1>
+
+  <!-- Search + Category Filter -->
+  <div class="row mb-4">
+
+    <!-- Search Bar -->
+    <div class="col-md-6">
+      <%= form_with url: products_path, method: :get, local: true do %>
+        <div class="input-group shadow-sm">
+          <span class="input-group-text bg-white">🔍</span>
+
+          <%= text_field_tag :search,
+                params[:search],
+                class: "form-control",
+                placeholder: "Search products..." %>
+
+          <% if params[:search].present? %>
+            <%= link_to "✕", products_path, class: "btn btn-outline-secondary" %>
+          <% end %>
+
+          <button class="btn btn-primary">Search</button>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="col-md-3">
+      <%= form_with url: products_path, method: :get, local: true do %>
+        <%= select_tag :category_id,
+              options_from_collection_for_select(Category.all, :id, :name, params[:category_id]),
+              prompt: "All Categories",
+              class: "form-select shadow-sm",
+              onchange: "this.form.submit()" %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <!-- Product Grid -->
+  <div class="row g-4">
+    <% @products.each do |product| %>
+      <div class="col-md-3">
+        <div class="card shadow-sm h-100">
+
+          <% if product.images.attached? %>
+            <%= image_tag(
+                  product.images.first.variant(resize_to_limit: [400, 400]).processed,
+                  class: "card-img-top",
+                  style: "object-fit: cover; height: 200px;"
+                ) %>
+          <% else %>
+            <img src="https://via.placeholder.com/400x200" class="card-img-top">
+          <% end %>
+
+          <div class="card-body">
+            <h5 class="card-title"><%= product.name %></h5>
+            <p class="card-text text-muted"><%= number_to_currency(product.price) %></p>
+
+            <%= link_to "View", product_path(product), class: "btn btn-outline-primary w-100" %>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Pagination -->
+  <div class="mt-4 d-flex justify-content-center">
+    <% if @products.respond_to?(:total_pages) %>
+      <%= paginate @products,
+            params: {
+              search: params[:search],
+              category_id: params[:category_id]
+            } %> <!-- REMOVED THEME -->
+    <% end %>
+  </div>
+
+</div>

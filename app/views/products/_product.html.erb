@@ -1,0 +1,11 @@
+<div class="product-card">
+  <h3><%= link_to product.name, product %></h3>
+  <p><%= number_to_currency(product.price) %></p>
+
+<% if product.images.attached? %>
+  <%= image_tag product.images.first, class: "card-img-top" %>
+<% end %>
+
+
+
+</div>
